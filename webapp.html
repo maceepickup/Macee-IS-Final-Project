@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Geography Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f7fa;
+      text-align: center;
+      padding: 40px;
+    }
+    #game {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <h1>🌍 Guess the Country!</h1>
+    <p id="clue">Clue: This country has the Great Barrier Reef.</p>
+    <input type="text" id="guessInput" placeholder="Your guess here..." />
+    <br />
+    <button onclick="checkGuess()">Submit Guess</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      { clue: "This country has the Great Barrier Reef.", answer: "Australia" },
+      { clue: "This country is home to the Eiffel Tower.", answer: "France" },
+      { clue: "This country has Mount Fuji.", answer: "Japan" },
+      { clue: "This country has the majority of the Amazon Rainforest.", answer: "Brazil" },
+      { clue: "This country has the Machu Picchu.", answer: "Peru" },
+      { clue: "This country has the Pyramids of Giza.", answer: "Egypt" },
+    ];
+
+    let currentQuestion = 0;
+
+    function checkGuess() {
+      const userGuess = document.getElementById("guessInput").value.trim().toLowerCase();
+      const correctAnswer = questions[currentQuestion].answer.toLowerCase();
+
+      const result = document.getElementById("result");
+      if (userGuess === correctAnswer) {
+        result.innerHTML = "✅ Correct!";
+      } else {
+        result.innerHTML = `❌ Wrong! The correct answer was <strong>${questions[currentQuestion].answer}</strong>.`;
+      }
+
+      // Move to the next question after 1 second
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          document.getElementById("clue").textContent = "Clue: " + questions[currentQuestion].clue;
+          document.getElementById("guessInput").value = "";
+          result.innerHTML = "";
+        } else {
+          document.getElementById("game").innerHTML = "<h1>🎉 You're a geography genius! 🎉</h1>";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
+
